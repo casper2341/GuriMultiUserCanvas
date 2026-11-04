@@ -5,4 +5,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotlin.kapt) apply false
+    // Applied in app/build.gradle.kts once app/google-services.json is added — see README "Firebase setup"
+    alias(libs.plugins.google.services) apply false
 }

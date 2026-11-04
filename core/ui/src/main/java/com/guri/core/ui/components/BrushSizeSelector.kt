@@ -50,15 +50,18 @@ private fun BrushSizeItem(
     modifier: Modifier = Modifier
 ) {
     val sizeDp = (size * 1.5f).coerceAtMost(24f).dp
-    
+
     Box(
         modifier = modifier
-            .size(36.dp)
+            .size(40.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surface)
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                else MaterialTheme.colorScheme.surfaceVariant
+            )
             .border(
-                width = if (isSelected) 2.dp else 1.dp,
-                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                width = if (isSelected) 2.dp else 0.dp,
+                color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
             .clickable(onClick = onClick),
@@ -68,7 +71,10 @@ private fun BrushSizeItem(
             modifier = Modifier
                 .size(sizeDp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.onSurface)
+                .background(
+                    if (isSelected) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.onSurfaceVariant
+                )
         )
     }
 }

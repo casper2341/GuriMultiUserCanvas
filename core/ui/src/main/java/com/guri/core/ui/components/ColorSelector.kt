@@ -6,9 +6,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +33,7 @@ fun ColorSelector(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         colors.forEach { color ->
@@ -51,19 +53,43 @@ private fun ColorItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val borderWidth = if (isSelected) 3.dp else 1.dp
-    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-    
+    val swatchColor = Color(color)
+    val isLight = relativeLuminance(swatchColor) > 0.7f
+    val ringColor = MaterialTheme.colorScheme.primary
+    val size = if (isSelected) 40.dp else 34.dp
+
     Box(
         modifier = modifier
-            .size(32.dp)
-            .clip(CircleShape)
-            .background(Color(color.toULong()))
-            .border(borderWidth, borderColor, CircleShape)
-            .clickable(onClick = onClick)
-            .padding(4.dp)
-    )
+            .size(44.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .size(size)
+                .clip(CircleShape)
+                .background(swatchColor)
+                .border(
+                    width = if (isSelected) 3.dp else 1.dp,
+                    color = if (isSelected) ringColor else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
+                    shape = CircleShape
+                )
+                .clickable(onClick = onClick),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isSelected) {
+                Icon(
+                    imageVector = Icons.Filled.Check,
+                    contentDescription = "Selected",
+                    tint = if (isLight) Color.Black.copy(alpha = 0.6f) else Color.White,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+        }
+    }
 }
+
+private fun relativeLuminance(color: Color): Float =
+    (0.299f * color.red + 0.587f * color.green + 0.114f * color.blue)
 
 @Preview(showBackground = true)
 @Composable
@@ -73,4 +99,4 @@ private fun ColorSelectorPreview() {
         selectedColor = AppConstants.DEFAULT_COLORS[0],
         onColorSelected = {}
     )
-} 
+}

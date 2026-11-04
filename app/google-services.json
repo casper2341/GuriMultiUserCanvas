@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "239178630524",
+    "firebase_url": "https://gurimultiusercanvas-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "gurimultiusercanvas",
+    "storage_bucket": "gurimultiusercanvas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239178630524:android:941a3933e48234c6c690f9",
+        "android_client_info": {
+          "package_name": "com.guri.gurimultiusercanvas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHyj61hP-g5dbKZtS7qXLZSwjDMN_M0vk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,6 @@
 package com.guri.core.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +11,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.FormatColorFill
-import androidx.compose.material.icons.outlined.Circle
+import androidx.compose.material.icons.filled.HorizontalRule
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Rectangle
 import androidx.compose.material.icons.outlined.Clear
-import androidx.compose.material.icons.outlined.Rectangle
 import androidx.compose.material.icons.outlined.TextFields
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -62,35 +62,29 @@ private fun ToolItem(
         DrawPath.ToolType.PEN -> Icons.Filled.Create
         DrawPath.ToolType.MARKER -> Icons.Filled.FormatColorFill
         DrawPath.ToolType.ERASER -> Icons.Outlined.Clear
-        DrawPath.ToolType.SHAPE_LINE -> Icons.Outlined.Clear // Use a line icon if available
-        DrawPath.ToolType.SHAPE_RECTANGLE -> Icons.Outlined.Rectangle
-        DrawPath.ToolType.SHAPE_CIRCLE -> Icons.Outlined.Circle
+        DrawPath.ToolType.SHAPE_LINE -> Icons.Filled.HorizontalRule
+        DrawPath.ToolType.SHAPE_RECTANGLE -> Icons.Filled.Rectangle
+        DrawPath.ToolType.SHAPE_CIRCLE -> Icons.Filled.Circle
         DrawPath.ToolType.TEXT -> Icons.Outlined.TextFields
     }
     
     Box(
         modifier = modifier
-            .size(44.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .size(48.dp)
+            .clip(RoundedCornerShape(16.dp))
             .background(
-                if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                else MaterialTheme.colorScheme.surface
-            )
-            .border(
-                width = 1.dp,
-                color = if (isSelected) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(8.dp)
+                if (isSelected) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.surfaceVariant
             )
             .clickable(onClick = onClick)
-            .padding(8.dp),
+            .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
         Icon(
             imageVector = icon,
             contentDescription = "Tool ${tool.name}",
-            tint = if (isSelected) MaterialTheme.colorScheme.primary
-                   else MaterialTheme.colorScheme.onSurface
+            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary
+                   else MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

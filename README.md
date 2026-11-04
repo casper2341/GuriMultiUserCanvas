@@ -54,19 +54,19 @@ Dependencies flow one direction only: `app` → `feature:*` → `core:ui` / `cor
 
 This app requires a Firebase project for authentication, real-time sync, and storage.
 
-1. **Create a Firebase project** at the [Firebase Console](https://console.firebase.google.com/).
-2. **Register the Android app** with package name `com.guri.gurimultiusercanvas`.
-3. **Download `google-services.json`** and place it in the `app/` module directory.
-4. **Apply the Google Services Gradle plugin** — it is not currently wired into this project's build files, so you'll need to add the `com.google.gms.google-services` plugin (root `build.gradle.kts` and `app/build.gradle.kts`) before Firebase will initialize correctly.
+1. ~~**Create a Firebase project** at the [Firebase Console](https://console.firebase.google.com/).~~ Done.
+2. ~~**Register the Android app** with package name `com.guri.gurimultiusercanvas`.~~ Done.
+3. ~~**Download `google-services.json`** and place it in the `app/` module directory.~~ Done.
+4. ~~**Apply the Google Services Gradle plugin** — uncomment `alias(libs.plugins.google.services)` in `app/build.gradle.kts`'s `plugins {}` block.~~ Done — `:app:assembleDebug` builds successfully with it applied.
 5. **Enable the following in the Firebase Console:**
-   - **Authentication** → enable the Anonymous sign-in provider
-   - **Cloud Firestore** → create a database
-   - **Realtime Database** → create a database
-   - **Storage** → set up a bucket for saved canvas images
+   - **Authentication** → enable the Anonymous sign-in provider — Done, confirmed enabled
+   - **Cloud Firestore** → create a database — Done
+   - **Realtime Database** → create a database — Done (`google-services.json` was re-downloaded afterward so it includes `project_info.firebase_url`)
+   - **Storage** → set up a bucket for saved canvas images — Done (project upgraded to Blaze plan)
 
 #### Security rules
 
-**Firestore rules:**
+**Firestore rules:** (Done — published to the console)
 ```
 rules_version = '2';
 service cloud.firestore {
@@ -93,7 +93,7 @@ service cloud.firestore {
 }
 ```
 
-**Realtime Database rules:**
+**Realtime Database rules:** (Done — published to the console)
 ```
 {
   "rules": {
@@ -104,7 +104,7 @@ service cloud.firestore {
                     !data.exists() ||
                     !data.child('isLocked').exists() ||
                     data.child('isLocked').val() == false ||
-                    root.child('rooms').child($roomId).child('creatorId').val() == auth.uid
+                    data.child('creatorId').val() == auth.uid
                   )"
       }
     },
@@ -126,7 +126,7 @@ service cloud.firestore {
 }
 ```
 
-**Storage rules:**
+**Storage rules:** (Done — published to the console)
 ```
 rules_version = '2';
 service firebase.storage {
@@ -171,6 +171,7 @@ gradlew.bat :app:connectedDebugAndroidTest
 - ✅ User authentication data layer (`core:network` → `core:data`) fully implemented
 - ⏳ `feature:auth`, `feature:room`, `feature:canvas` screens — not yet implemented (placeholder destinations only)
 - ⏳ Room and Canvas network services / repositories — interfaces defined, implementations pending
-- ⏳ Google Services Gradle plugin not yet applied to the build
+- ✅ Google Services Gradle plugin applied; `app/google-services.json` in place, RTDB created and rules published
+- ✅ Firestore database and Storage bucket created in the Firebase console, all rules published; Blaze plan active with a budget alert set
 
 See `CLAUDE.md` for a deeper architectural breakdown intended for contributors working with AI coding assistants.

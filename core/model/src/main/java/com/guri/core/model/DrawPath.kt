@@ -13,14 +13,15 @@ data class DrawPath(
     val points: List<Point> = emptyList(),
     val timestamp: Long = System.currentTimeMillis(),
     val toolType: ToolType = ToolType.PEN,
-    val isDeleted: Boolean = false
+    val isDeleted: Boolean = false,
+    val text: String? = null
 ) {
     /**
      * Data class representing a point in a drawing path
      */
     data class Point(
-        val x: Float,
-        val y: Float
+        val x: Float = 0f,
+        val y: Float = 0f
     )
     
     /**
